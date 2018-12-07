@@ -1,0 +1,36 @@
+{
+    "name": "buckleshusky/silverstripe-elemental-soundcloud",
+    "type": "silverstripe-vendormodule",
+    "description": "Display a soundcloud block",
+    "keywords": [
+        "silverstripe", "elemental", "blocks", "soundcloud", "panels"
+    ],
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "BucklesHusky",
+            "email": "",
+            "homepage": ""
+        }
+    ],
+    "require": {
+        "dnadesign/silverstripe-elemental": "^2@dev || ^3@dev",
+        "dynamic/silverstripe-elemental-baseobject": "^1@dev",
+        "silverstripe/vendor-plugin": "^1@dev",
+        "sheadawson/silverstripe-linkable": "^2@dev",
+        "symbiote/silverstripe-gridfieldextensions": "^3.1@dev"
+    },
+    "require-dev": {
+        "phpunit/PHPUnit": "^5.7",
+        "squizlabs/php_codesniffer": "*"
+    },
+    "config": {
+        "process-timeout": 600
+    },
+    "extra": {
+        "expose": [
+            "css",
+            "icons"
+        ]
+    }
+}

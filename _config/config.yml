@@ -3,5 +3,5 @@ Name: buckleshusky-elemental-soundcloud
 ---
 SilverStripe\Admin\LeftAndMain:
   extensions:
-    - Dynamic\Elements\Accordion\Extensions\LeftAndMainExtension
+    - BucklesHusky\ElementalSoundcloud\Extensions\LeftAndMainExt
 
