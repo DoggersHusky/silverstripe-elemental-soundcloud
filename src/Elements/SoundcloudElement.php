@@ -53,7 +53,7 @@ class SoundcloudElement extends BaseElement {
         
         if ($this->SoundcloudURL) {
         
-            $iframe = $this->getURLContents('https://soundcloud.com/oembed?maxheight=81&auto_play=true&format=json&url='.$this->SoundcloudURL);
+            $iframe = $this->getURLContents('https://soundcloud.com/oembed?maxheight=500&auto_play=true&format=json&url='.$this->SoundcloudURL);
             $iframe = json_decode($iframe);
 
             $data = new DBHTMLText('Sound');
