@@ -28,7 +28,6 @@
     },
     "extra": {
         "expose": [
-            "css",
             "icons"
         ]
     }
