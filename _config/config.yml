@@ -5,3 +5,8 @@ SilverStripe\Admin\LeftAndMain:
   extensions:
     - BucklesHusky\ElementalSoundcloud\Extensions\LeftAndMainExt
 
+SilverStripe\Core\Injector\Injector:
+  Psr\SimpleCache\CacheInterface.elementalsoundcloud:
+    factory: SilverStripe\Core\Cache\CacheFactory
+    constructor:
+      namespace: "elementalsoundcloud"

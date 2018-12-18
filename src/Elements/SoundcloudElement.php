@@ -5,6 +5,9 @@ namespace BucklesHusky\ElementalSoundcloud\Elements;
 use DNADesign\Elemental\Models\BaseElement;
 use SilverStripe\ORM\FieldType\DBHTMLText;
 use SilverStripe\Forms\TextField;
+use Psr\SimpleCache\CacheInterface;
+use SilverStripe\Core\Injector\Injector;
+use SilverStripe\ORM\FieldType\DBDate;
 
 class SoundcloudElement extends BaseElement {
     
@@ -50,14 +53,31 @@ class SoundcloudElement extends BaseElement {
     }
     
     public function getSoundCloud() {
-        
+        //make sure there is something set
         if ($this->SoundcloudURL) {
-        
-            $iframe = $this->getURLContents('https://soundcloud.com/oembed?maxheight=500&auto_play=true&format=json&url='.$this->SoundcloudURL);
-            $iframe = json_decode($iframe);
+            
+            //get the cache
+            $cache = Injector::inst()->get(CacheInterface::class . '.elementalsoundcloud');
+            
+            //get the date
+            $date = DBDate::create();
+            $date->setValue($this->LastEdited);
+            
+            //the cache key
+            $cacheKey = implode(['soundCloud', $this->ID, $date->Nice()]);
+            
+            //try to get the cache
+            $data = $cache->get($cacheKey);
+            
+            if (!$data) {
+                $iframe = $this->getURLContents('https://soundcloud.com/oembed?maxheight=500&auto_play=true&format=json&url='.$this->SoundcloudURL);
+                $iframe = json_decode($iframe);
 
-            $data = new DBHTMLText('Sound');
-            $data->setValue($iframe->html);
+                $data = new DBHTMLText('Sound');
+                $data->setValue($iframe->html);
+                
+                $cache->set($cacheKey, $data);
+            }
 
             return $data;
         }
