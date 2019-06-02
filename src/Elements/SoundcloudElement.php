@@ -8,6 +8,7 @@ use SilverStripe\Forms\TextField;
 use Psr\SimpleCache\CacheInterface;
 use SilverStripe\Core\Injector\Injector;
 use SilverStripe\ORM\FieldType\DBDate;
+use SilverStripe\Forms\DropdownField;
 
 class SoundcloudElement extends BaseElement
 {
@@ -24,7 +25,12 @@ class SoundcloudElement extends BaseElement
     private static $Description = 'A Soundcloud block';
 
     private static $db = [
-        'SoundcloudURL' => 'Text'
+        'SoundcloudURL' => 'Text',
+        'Height' => 'Enum("500,400,300,200,100", "300")',
+    ];
+
+    private static $defaults = [
+        'Height' => '300',
     ];
 
     public function getCMSFields()
@@ -36,6 +42,15 @@ class SoundcloudElement extends BaseElement
         $fields->addFieldToTab(
             'Root.Main',
             TextField::create('SoundcloudURL', 'SoundCloud URL')->setDescription('example: https://soundcloud.com/scumgang6ix9ine/waka-ft-a-boogie-wit-da-hoodie')
+        );
+
+        $fields->addFieldToTab(
+            'Root.Settings',
+            DropdownField::create(
+                'Height',
+                'Height',
+                $this->owner->dbObject('Height')->enumValues()
+            )
         );
 
         if ($this->SoundcloudURL) {
@@ -69,13 +84,13 @@ class SoundcloudElement extends BaseElement
             $date->setValue($this->LastEdited);
 
             //the cache key
-            $cacheKey = implode(['soundCloud', $this->ID, $date->Nice()]);
+            $cacheKey = implode(['soundCloud', $this->ID, $date->Nice(), $this->Height]);
 
             //try to get the cache
             $data = $cache->get($cacheKey);
 
             if (!$data) {
-                $iframe = $this->getURLContents('https://soundcloud.com/oembed?maxheight=500&auto_play=true&format=json&url=' . $this->SoundcloudURL);
+                $iframe = $this->getURLContents('https://soundcloud.com/oembed?maxheight=' . $this->Height . '&auto_play=false&format=json&url=' . $this->SoundcloudURL);
                 $iframe = json_decode($iframe);
 
                 $data = new DBHTMLText('Sound');
