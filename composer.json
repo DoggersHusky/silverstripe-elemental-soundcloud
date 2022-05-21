@@ -13,7 +13,7 @@
         }
     ],
     "require": {
-        "dnadesign/silverstripe-elemental": "^2@dev || ^3@dev || ^4@dev",
+        "dnadesign/silverstripe-elemental": "^2@dev || ^3@dev || ^4@dev"
     },
     "require-dev": {
     },
