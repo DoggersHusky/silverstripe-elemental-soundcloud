@@ -2,6 +2,7 @@
     "name": "buckleshusky/silverstripe-elemental-soundcloud",
     "type": "silverstripe-vendormodule",
     "description": "Display a soundcloud block",
+	"version": "0.0.3",
     "keywords": [
         "silverstripe", "elemental", "blocks", "soundcloud", "panels"
     ],
